@@ -1,0 +1,4 @@
+interface:
+  display_name: "Trip Master"
+  short_description: "搜索优先的旅行规划，携程订单续排、包豪斯手机行程与免费网页发布"
+  default_prompt: "使用 $trip-master 结合已有订单安排旅行，公开搜索核实信息，并输出可在手机查看的行程。"
