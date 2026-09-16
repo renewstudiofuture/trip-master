@@ -24,8 +24,6 @@ Trip Master 是由 **Renew Studio** 维护的旅行规划 Skill。从几句自�
 
 > 使用 Trip Master，规划两个人从上海出发的新疆九日自然之旅，总预算一万元。先给每日路线；交通住宿由我提供，没提供的保持待确认。
 
-只需安装 **Trip Master**。不要求另外安装 RedSkill、AutoCLI、纸拼贴风格技能或发布技能。
-
 ## 能力与环境
 
 | 功能 | 使用条件 |
