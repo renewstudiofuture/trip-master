@@ -12,7 +12,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
 
 W,H=420,740
-P={'ink':'#183344','muted':'#546C79','lake':'#087F8C','blue':'#2155CD','bg':'#F1F7FA','white':'#FFFFFF','line':'#D9E6EC','amber':'#98610B','sand':'#FFF3D8'}
+P={'ink':'#171717','muted':'#55544e','lake':'#164bb8','blue':'#2155CD','bg':'#f7f6f2','white':'#FFFFFF','line':'#cccac4','amber':'#171717','sand':'#f2ce35'}
 
 def main():
  ap=argparse.ArgumentParser(description=__doc__)
@@ -41,7 +41,7 @@ def main():
  if missing:ap.error('Font missing glyphs: '+''.join(sorted(missing)))
  a.output_pdf.parent.mkdir(parents=True,exist_ok=True)
  c=canvas.Canvas(str(a.output_pdf),pagesize=(W,H));c.setTitle(d['title']);c.setAuthor('旅行安排')
- def rect(x,y,w,h,color,r=12):
+ def rect(x,y,w,h,color,r=0):
   c.setFillColor(HexColor(P.get(color,color)));c.roundRect(x,H-y-h,w,h,r,fill=1,stroke=0)
  def txt(s,x,y,w,size=11,color='ink',font='Body'):
   style=ParagraphStyle('t',fontName=font,fontSize=size,leading=size*1.5,textColor=HexColor(P[color]),wordWrap='CJK')
@@ -78,7 +78,7 @@ def main():
   y+=19
   if p.get('day'):
    for n,day in enumerate(d.get('days',[])):
-    x=24+(n%7)*53;ny=y+(n//7)*34;active=day['id']==p['id'];rect(x,ny,47,27,'lake' if active else 'white',8)
+    x=24+(n%7)*53;ny=y+(n//7)*34;active=day['id']==p['id'];rect(x,ny,47,27,'lake' if active else 'white',0)
     txt(day['label'],x+6,ny+6,37,9,'white' if active else 'muted')
     c.linkRect('',day['id'],(x,H-ny-27,x+47,H-ny),relative=0,thickness=0)
    y+=34*((len(d.get('days',[]))+6)//7)+8

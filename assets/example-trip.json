@@ -1,0 +1,18 @@
+{
+ "schema_version":2,"trip_id":"example-trip","revision":1,"title":"示例旅行 · 非真实攻略","timezone":"Asia/Shanghai","travelers":3,
+ "budget":{"amount_minor":600000,"currency":"CNY","scope":"total"},
+ "places":[
+  {"id":"park","name":"示例公园","category":"sights","reason":"展示景点卡片与行程复用。","status":"待确认"},
+  {"id":"market","name":"示例市集","category":"shopping","reason":"展示购物卡片，不是真实推荐。","status":"待确认"},
+  {"id":"cafe","name":"示例餐馆","category":"food","reason":"展示餐饮卡片，不是真实推荐。","status":"待确认"}
+ ],
+ "days":[
+  {"id":"day1","date":"2026-11-02","title":"抵达与慢游","stops":[{"id":"walk","place_id":"park","start":"2026-11-02T10:00:00+08:00","end":"2026-11-02T11:00:00+08:00","status":"估算","note":"演示安排"}]},
+  {"id":"day2","date":"2026-11-03","title":"市集与餐饮","stops":[{"id":"shop","place_id":"market","booking_id":"ticket","locked":true,"status":"用户提供"},{"id":"lunch","place_id":"cafe","status":"估算"}]},
+  {"id":"day3","date":"2026-11-04","title":"返程","stops":[{"id":"return","title":"返程交通待提供","status":"待确认"}]}
+ ],
+ "bookings":[{"id":"ticket","kind":"ticket","title":"示例用户门票","date":"2026-11-03","status":"用户提供"}],
+ "costs":[{"id":"ticket-cost","title":"示例门票费用","booking_id":"ticket","amount_minor":30000,"paid_minor":30000,"currency":"CNY","basis":"用户提供"}],
+ "tasks":[{"id":"confirm-return","title":"补充返程交通","note":"本例用于功能测试，不是已核实旅行方案。","priority":"必要"}],
+ "evidence":[]
+}

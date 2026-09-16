@@ -1,32 +1,78 @@
 # Trip Master
 
-搜索优先的国内旅行规划技能：围绕已有交通、酒店、门票续排行程，输出简洁、可核实的手机攻略。
+把旅行想法，做成一份能随身查看、调整和分享的网页攻略。
 
-## 特点
+Trip Master 是由 **Renew Studio** 维护的旅行规划 Skill。从几句自然语言或一份简问卷开始，先给出每日路线，再补齐景点体验、餐饮、购物和出行贴士，最终生成适合手机阅读的静态网页。
 
-- 公开信息直接搜索；仅在读取携程私人订单时使用登录浏览器。
-- 保留用户固定日期，区分历史订单、用户确认、已核实与待办。
-- 用户已打开页面而工具看不到时，只做有限连接恢复，不要求反复登录导航。
-- 包豪斯风格单文件手机网页：日期切换、交通住宿卡片、预算和待办；PDF作为离线选择。
-- 需要分享时支持按授权使用免费静态托管，检查真实访问结果。
+## 能做什么
 
-## 安装到 Codex
+- **从“不知道去哪”开始规划**：根据目的地、日期、预算和偏好主动推荐，先确认路线，再深入研究。
+- **五个固定模块**：行程、景点、购物、餐饮、贴士。统一数据驱动页面，修改只重查受影响的内容。
+- **两种完整风格**：包豪斯与纸境拼贴；底部一键换肤。插画封面基于目的地实景转绘，景点详情保留真实照片。
+- **可操作的行程**：建议时段、日期导航、景点介绍，以及返回刚才行程位置的按钮。支持本地增删、修改和移动活动。
+- **预算联动记账**：紧凑账目列表，显示已记支出、剩余或超出预算；支持导出、导入，各币种分别统计。
+- **可分享的静态网址**：发布到使用者授权的托管平台，后续更新可沿用原链接。PDF 按需生成。
 
-克隆或下载本仓库，把完整文件夹放到 `~/.codex/skills/trip-master/`，确保入口为 `~/.codex/skills/trip-master/SKILL.md`。在下一轮对话使用 `$trip-master`。
+交通、酒店和已购门票由用户提供文字或截图；缺少信息就保留待确认，不登录旅行账号读取订单，也不代订或退改。
 
-示例：`使用 $trip-master 为三人规划七天旅行，先读取已订订单，公开搜索补齐余下安排，输出手机行程。`
+## 开始使用
 
-## 导出
+下载本仓库，将完整目录放到 `~/.codex/skills/trip-master/`，确保入口是 `trip-master/SKILL.md`。下一轮对话中使用 `$trip-master`，或直接描述旅行需求。
 
-需要Python 3。HTML导出不需要第三方依赖；PDF需要reportlab和可嵌入的中文TrueType字体。具体数据格式见 `references/pdf-design.md` 和 `references/mobile-web.md`。
+例如：
+
+> 使用 Trip Master，规划两个人从上海出发的新疆九日自然之旅，总预算一万元。先给每日路线；交通住宿由我提供，没提供的保持待确认。
+
+只需安装 **Trip Master**。不要求另外安装 RedSkill、AutoCLI、纸拼贴风格技能或发布技能。
+
+## 能力与环境
+
+| 功能 | 使用条件 |
+| --- | --- |
+| 公开地点研究 | 宿主提供搜索或网页读取工具 |
+| 小红书高赞路线 | 宿主提供浏览器能力，必要时由用户扫码登录；先确认站内“最多点赞”筛选生效，再读取结果 |
+| 纸拼贴封面 | 使用宿主已有生图能力；不可用时保留实景封面并说明，不伪称已生成 |
+| HTML 构建与数据校验 | Python 3.10+ 标准库及可用的系统时区数据 |
+| 静态网址发布 | 使用者自己的托管账号与发布权限 |
+| 可选 PDF | ReportLab 与可嵌入的中文 TrueType 字体 |
+
+没有单独的应用后台。换肤、个人行程编辑和记账在浏览器执行；需要新地点研究或整体重排时，将页面生成的要求复制回助手对话。
+
+## 发布与个人数据
+
+网页采用标准 HTML/CSS/JavaScript 和相对路径图片，可部署到适用的静态托管服务。流程优先复用使用者指定的平台或现有授权，不绑定开发者电脑、账号、项目或域名。发布完成后核验实际网址，再交付分享链接。
+
+账本、主题和个人调整仅保存在当前浏览器；分享链接不会同步这些数据。更换设备、浏览器或域名时，用导出/导入迁移账本与个人行程。同一旅行更新保留稳定 ID，跨版本的个人调整不会被静默覆盖。
+
+仓库只包含技能、模板、脚本和合成示例，不包含真实行程、账号、订单或授权凭据。实际发布也只上传审阅后的网页与公开资产。
+
+## 构建与检查
 
 ```sh
-python scripts/build_mobile_html.py trip-cards.json index.html
-python scripts/build_cards_pdf.py trip-cards.json trip.pdf --font /path/to/chinese-font.ttf
+python scripts/build_intake.py questionnaire.html
+python scripts/trip_model.py validate trip.json
+python scripts/build_mobile_html.py trip.json index.html
+python scripts/test_trip_model.py
 ```
 
-本仓库不包含任何个人行程、订单、账号或部署凭据。不会代为付款、退改或发送消息。网页登录与实时库存可能受平台限制；输出必须标明未核实项。HTML需托管成HTTPS网址才能作为微信分享入口，PDF内链兼容性取决于阅读器。
+数据格式见 [数据契约](references/data-model.md)，发布流程见 [静态发布](references/publishing.md)。[合成示例](assets/example-trip.json) 用于理解格式，不作为实际旅行事实。自动检查不替代地点、开放信息、照片和手机显示的核验。
 
-## 来源与许可
+## 项目沿革与设计参考
 
-基于 [TianhaoWu66/trip-planner](https://github.com/TianhaoWu66/trip-planner) 改写，保留原MIT许可与版权声明。行程组织参考圆周旅迹公开产品说明，不隶属于携程或圆周旅迹，也不包含其私有接口。
+Trip Master 的早期版本以 [TianhaoWu66/trip-planner](https://github.com/TianhaoWu66/trip-planner) 为起点。此后围绕手机网页交付，持续重新设计需求收集、研究流程、统一数据、页面交互、预算记账、视觉主题与发布机制。当前版本由 Renew Studio 维护，已形成自己的产品流程与实现；不再以“原项目的整体改写版”概括其现状。历史来源对应的版权与许可声明仍予保留。
+
+以下为流程或视觉方向的参考，与实际复用代码的归属分别说明：
+
+- [personalized-travel-guide-skill](https://github.com/TokenHungryMash/personalized-travel-guide-skill)：统一数据、行程调整和增量研究的组织思路。
+- 圆周旅迹：旅行信息组织与移动端使用体验。
+- `photo-to-holly06-papercollage`：[照片转极简纸拼贴的视觉方向](https://www.xiaohongshu.com/explore/6aaa0775000000002603a457)。Trip Master 将相关视觉原则整理为内置旅行网页规范，不捆绑该技能或其安装器。
+
+上述参考不表示官方合作、隶属或背书。
+
+## 许可证与第三方代码
+
+Trip Master 自有及适用的衍生部分采用 [MIT License](LICENSE)，保留早期来源的版权声明，并列明 Renew Studio 的新增与修改贡献。
+
+`scripts/xhs-extract.js` 包含基于 **nashsu/AutoCLI**（及其上游 **jackwener/OpenCLI**）改编的搜索卡片提取逻辑，该部分按 **Apache-2.0** 保留相应许可、署名和修改说明。详见 [第三方代码声明](vendor/NOTICE.md)、[上游 NOTICE](vendor/AutoCLI-NOTICE.txt) 与 [Apache-2.0 文本](vendor/licenses/AutoCLI-Apache-2.0.txt)。仓库不捆绑 AutoCLI 主程序或浏览器扩展。
+
+照片、地图、字体及外部内容各自遵循其来源许可；本仓库的 MIT 许可不会自动覆盖这些素材。使用照片转绘时，也需确认源图允许相应使用并保留所需署名。
