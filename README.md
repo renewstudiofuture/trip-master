@@ -47,28 +47,6 @@ Trip Master 是由 **Renew Studio** 维护的旅行规划 Skill。从几句自�
 
 仓库只包含技能、模板、脚本和合成示例，不包含真实行程、账号、订单或授权凭据。实际发布也只上传审阅后的网页与公开资产。
 
-## 构建与检查
-
-```sh
-python scripts/build_intake.py questionnaire.html
-python scripts/trip_model.py validate trip.json
-python scripts/build_mobile_html.py trip.json index.html
-python scripts/test_trip_model.py
-```
-
-数据格式见 [数据契约](references/data-model.md)，发布流程见 [静态发布](references/publishing.md)。[合成示例](assets/example-trip.json) 用于理解格式，不作为实际旅行事实。自动检查不替代地点、开放信息、照片和手机显示的核验。
-
-## 项目沿革与设计参考
-
-Trip Master 的早期版本以 [TianhaoWu66/trip-planner](https://github.com/TianhaoWu66/trip-planner) 为起点。此后围绕手机网页交付，持续重新设计需求收集、研究流程、统一数据、页面交互、预算记账、视觉主题与发布机制。当前版本由 Renew Studio 维护，已形成自己的产品流程与实现；不再以“原项目的整体改写版”概括其现状。历史来源对应的版权与许可声明仍予保留。
-
-以下为流程或视觉方向的参考，与实际复用代码的归属分别说明：
-
-- [personalized-travel-guide-skill](https://github.com/TokenHungryMash/personalized-travel-guide-skill)：统一数据、行程调整和增量研究的组织思路。
-- 圆周旅迹：旅行信息组织与移动端使用体验。
-- `photo-to-holly06-papercollage`：[照片转极简纸拼贴的视觉方向](https://www.xiaohongshu.com/explore/6aaa0775000000002603a457)。Trip Master 将相关视觉原则整理为内置旅行网页规范，不捆绑该技能或其安装器。
-
-上述参考不表示官方合作、隶属或背书。
 
 ## 许可证与第三方代码
 
